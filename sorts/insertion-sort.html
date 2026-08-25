@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insertion Sort — Desk Check</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <span class="brand">Sorting &amp; Merging</span>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../arrays-vs-lists.html">Arrays vs Lists</a>
+      <a href="bubble-sort.html">Bubble Sort</a>
+      <a href="selection-sort.html">Selection Sort</a>
+      <a href="insertion-sort.html" class="active">Insertion Sort</a>
+      <a href="merge-sort.html">Merge Sort</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Insertion Sort</h1>
+  <p class="lede">
+    Builds up a sorted section at the front of the array one element at a time. Each new
+    element (the <code class="inline">key</code>) is shifted left past every larger
+    element in the sorted section until it reaches its correct position — the way most
+    people sort a hand of playing cards.
+  </p>
+
+  <h2>Variables &amp; data structure</h2>
+  <div class="panel">
+    <ul class="tight">
+      <li><code class="inline">arr</code> — the array being sorted (fixed-size, in place).</li>
+      <li><code class="inline">n</code> — number of elements in <code class="inline">arr</code>.</li>
+      <li><code class="inline">i</code> — index of the next element to insert into the sorted section <code class="inline">arr[0..i-1]</code>.</li>
+      <li><code class="inline">key</code> — the value being inserted (a copy of <code class="inline">arr[i]</code>).</li>
+      <li><code class="inline">j</code> — scans backwards through the sorted section looking for <code class="inline">key</code>'s position.</li>
+    </ul>
+  </div>
+
+  <h2>Control structures</h2>
+  <div class="panel">
+    <ul class="tight">
+      <li><strong>Iteration:</strong> an outer <code class="inline">FOR</code> loop, one iteration per element to insert.</li>
+      <li><strong>Iteration (condition-controlled):</strong> an inner <code class="inline">WHILE</code> loop that keeps shifting while <code class="inline">j &#8805; 0</code> <em>and</em> <code class="inline">arr[j] &gt; key</code> — a compound condition combining a bounds check with a value check.</li>
+      <li><strong>Sequence:</strong> the shift (<code class="inline">arr[j+1] &#8592; arr[j]</code>) and the final insert (<code class="inline">arr[j+1] &#8592; key</code>) always run in the same order.</li>
+    </ul>
+  </div>
+
+  <h2>Flowchart</h2>
+  <div class="flowchart-wrap">
+    <svg viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Insertion sort flowchart">
+      <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path class="fc-arrowhead" d="M0,0 L6,3 L0,6 Z"></path>
+        </marker>
+      </defs>
+
+      <rect class="fc-terminator" x="220" y="10" width="140" height="40" rx="20"></rect>
+      <text class="fc-text-light" x="290" y="34" text-anchor="middle">Start</text>
+      <path class="fc-arrow" d="M290,50 L290,75"></path>
+
+      <rect class="fc-shape" x="160" y="75" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="99" text-anchor="middle">i &#8592; 1</text>
+      <path class="fc-arrow" d="M290,115 L290,140"></path>
+
+      <polygon class="fc-decision" points="290,140 420,185 290,230 160,185"></polygon>
+      <text class="fc-text" x="290" y="189" text-anchor="middle">i &lt; n ?</text>
+      <text class="fc-label" x="300" y="248">Yes</text>
+      <path class="fc-arrow" d="M290,230 L290,255"></path>
+
+      <rect class="fc-shape" x="160" y="255" width="260" height="50" rx="4"></rect>
+      <text class="fc-text" x="290" y="275" text-anchor="middle" font-size="11">key &#8592; arr[i]</text>
+      <text class="fc-text" x="290" y="291" text-anchor="middle" font-size="11">j &#8592; i - 1</text>
+      <path class="fc-arrow" d="M290,305 L290,325"></path>
+
+      <polygon class="fc-decision" points="290,325 420,370 290,415 160,370"></polygon>
+      <text class="fc-text" x="290" y="363" text-anchor="middle" font-size="10">j &#8805; 0 AND</text>
+      <text class="fc-text" x="290" y="377" text-anchor="middle" font-size="10">arr[j] &gt; key ?</text>
+      <text class="fc-label" x="300" y="433">Yes</text>
+      <path class="fc-arrow" d="M290,415 L290,440"></path>
+
+      <rect class="fc-shape" x="160" y="440" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="464" text-anchor="middle" font-size="11">arr[j + 1] &#8592; arr[j]</text>
+      <path class="fc-arrow" d="M290,480 L290,500"></path>
+
+      <rect class="fc-shape" x="160" y="500" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="524" text-anchor="middle">j &#8592; j - 1</text>
+
+      <text class="fc-label" x="566" y="450">loop</text>
+      <path class="fc-arrow" d="M420,520 L560,520 L560,370 L420,370"></path>
+
+      <text class="fc-label" x="60" y="360">No</text>
+      <path class="fc-arrow" d="M160,370 L90,370 L90,630 L160,630"></path>
+
+      <rect class="fc-shape" x="160" y="610" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="634" text-anchor="middle" font-size="11">arr[j + 1] &#8592; key</text>
+      <path class="fc-arrow" d="M290,650 L290,670"></path>
+
+      <rect class="fc-shape" x="160" y="670" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="694" text-anchor="middle">i &#8592; i + 1</text>
+
+      <text class="fc-label" x="10" y="450">loop</text>
+      <path class="fc-arrow" d="M160,690 L40,690 L40,185 L160,185"></path>
+
+      <text class="fc-label" x="428" y="178">No</text>
+      <path class="fc-arrow" d="M420,185 L460,185 L460,780 L290,780"></path>
+
+      <path class="fc-arrow" d="M290,780 L290,800"></path>
+      <rect class="fc-terminator" x="220" y="800" width="140" height="40" rx="20"></rect>
+      <text class="fc-text-light" x="290" y="824" text-anchor="middle">End</text>
+    </svg>
+  </div>
+
+  <h2>Pseudocode &amp; Python code</h2>
+  <div class="panel-grid">
+    <div>
+      <h3>Pseudocode</h3>
+      <pre><code>BEGIN InsertionSort(arr, n)
+  FOR i &#8592; 1 TO n - 1 DO
+    key &#8592; arr[i]
+    j &#8592; i - 1
+    WHILE j &#8805; 0 AND arr[j] &gt; key DO
+      arr[j + 1] &#8592; arr[j]
+      j &#8592; j - 1
+    END WHILE
+    arr[j + 1] &#8592; key
+  END FOR
+END InsertionSort</code></pre>
+    </div>
+    <div>
+      <h3>Python</h3>
+      <pre><code>def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr</code></pre>
+    </div>
+  </div>
+
+  <h2>Interactive desk check</h2>
+  <p class="lede">Set your own array (comma-separated) or randomise one, then step through — the trace table below fills in exactly like a paper desk check.</p>
+  <div id="visualizer"></div>
+</main>
+
+<footer class="site-footer">
+  Built for Software Engineering desk-check practice. Deployed via GitHub Pages.
+</footer>
+
+<script src="../js/visualizer.js"></script>
+<script src="../js/algorithms/insertion.js"></script>
+<script>
+  initVisualizer({
+    root: "visualizer",
+    algorithmFn: insertionSortSteps,
+    varNames: ["i", "j", "key"],
+    defaultArray: [8, 3, 5, 4, 7, 6, 1, 2],
+  });
+</script>
+</body>
+</html>

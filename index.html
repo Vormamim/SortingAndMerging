@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays, Lists & Sorting — Algorithm Desk Checks</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <span class="brand">Sorting &amp; Merging</span>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="arrays-vs-lists.html">Arrays vs Lists</a>
+      <a href="sorts/bubble-sort.html">Bubble Sort</a>
+      <a href="sorts/selection-sort.html">Selection Sort</a>
+      <a href="sorts/insertion-sort.html">Insertion Sort</a>
+      <a href="sorts/merge-sort.html">Merge Sort</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Arrays, Lists &amp; Sorting Algorithms</h1>
+  <p class="lede">
+    An interactive companion for the Software Engineering "structured programming" and
+    "tools for developing algorithms" topics: theory on arrays vs lists, then four
+    sorting algorithms you can desk-check live in the browser — variables, control
+    structures, flowcharts, pseudocode, Python code, and a step-by-step trace table.
+  </p>
+
+  <h2>Theory</h2>
+  <div class="card-grid">
+    <a class="card" href="arrays-vs-lists.html">
+      <span class="tag">Data structures</span>
+      <h3>Arrays vs Lists</h3>
+      <p>Fixed vs dynamic size, contiguous memory vs nodes, access time, insertion/deletion cost, and when to use each.</p>
+    </a>
+  </div>
+
+  <h2>Sorting algorithms</h2>
+  <p class="lede">Each page identifies the variables and control structures used, gives a flowchart and matching
+     pseudocode, provides the Python code, and lets you desk-check the algorithm on any array you like.</p>
+  <div class="card-grid">
+    <a class="card" href="sorts/bubble-sort.html">
+      <span class="tag">O(n²)</span>
+      <h3>Bubble Sort</h3>
+      <p>Repeatedly compares and swaps adjacent elements until no swaps are needed.</p>
+    </a>
+    <a class="card" href="sorts/selection-sort.html">
+      <span class="tag">O(n²)</span>
+      <h3>Selection Sort</h3>
+      <p>Repeatedly selects the smallest remaining value and swaps it into place.</p>
+    </a>
+    <a class="card" href="sorts/insertion-sort.html">
+      <span class="tag">O(n²)</span>
+      <h3>Insertion Sort</h3>
+      <p>Grows a sorted section at the front of the array, one key at a time.</p>
+    </a>
+    <a class="card" href="sorts/merge-sort.html">
+      <span class="tag">O(n log n)</span>
+      <h3>Merge Sort</h3>
+      <p>Divides the array in half recursively, then merges sorted halves back together.</p>
+    </a>
+  </div>
+
+  <h2>Video walkthroughs</h2>
+  <div class="panel">
+    <p style="margin:0 0 0.5rem;">
+      For a talked-through explanation of these algorithms alongside this site's interactive desk checks,
+      work through this YouTube playlist:
+    </p>
+    <p style="margin:0;">
+      <a href="https://www.youtube.com/playlist?list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U" target="_blank" rel="noopener">
+        Sorting Algorithms — video playlist &#8599;
+      </a>
+    </p>
+  </div>
+
+  <h2>How to use this site</h2>
+  <div class="panel">
+    <ol class="tight">
+      <li>Read the theory section for the data structure or algorithm.</li>
+      <li>Check the <strong>variables</strong> and <strong>control structures</strong> panel — know what each one is doing before you trace it.</li>
+      <li>Step through the <strong>flowchart</strong> and <strong>pseudocode</strong> side by side.</li>
+      <li>Use the <strong>interactive desk check</strong>: type your own array (or randomise one), then click <em>Next</em> repeatedly and watch the trace table fill in — that's exactly what you'd write by hand on paper.</li>
+      <li>Compare against the <strong>Python code</strong> to see the working implementation.</li>
+    </ol>
+  </div>
+</main>
+
+<footer class="site-footer">
+  Built for Software Engineering desk-check practice. Deployed via GitHub Pages.
+</footer>
+
+</body>
+</html>

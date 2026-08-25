@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays vs Lists — Theory</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <span class="brand">Sorting &amp; Merging</span>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="arrays-vs-lists.html" class="active">Arrays vs Lists</a>
+      <a href="sorts/bubble-sort.html">Bubble Sort</a>
+      <a href="sorts/selection-sort.html">Selection Sort</a>
+      <a href="sorts/insertion-sort.html">Insertion Sort</a>
+      <a href="sorts/merge-sort.html">Merge Sort</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Arrays vs Lists</h1>
+  <p class="lede">
+    Both are ways of storing an ordered collection of values. The difference is <em>how</em>
+    they're stored in memory, and that difference drives every other trade-off below.
+  </p>
+
+  <h2>What each one is</h2>
+  <div class="panel-grid">
+    <div class="panel">
+      <h3>Array</h3>
+      <p>
+        A block of memory of <strong>fixed size</strong>, allocated all at once, holding
+        elements of the <strong>same type</strong> in <strong>contiguous</strong> memory
+        locations. Each element is found using its index, which the computer converts
+        directly into a memory address — that's why array access is instant no matter
+        how big the array is.
+      </p>
+    </div>
+    <div class="panel">
+      <h3>List</h3>
+      <p>
+        A collection that can <strong>grow or shrink</strong> at run time. In many
+        languages (Python's <code class="inline">list</code>, Java's <code class="inline">ArrayList</code>)
+        this is implemented as a dynamic array behind the scenes — a block of memory that
+        gets reallocated and copied when it runs out of room. A <strong>linked list</strong>
+        is a stricter version: separate nodes scattered in memory, each one storing a
+        value and a reference (pointer) to the next node.
+      </p>
+    </div>
+  </div>
+
+  <h2>Side-by-side comparison</h2>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Array</th><th>List (dynamic array)</th><th>Linked list</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Size</td>
+        <td>Fixed at creation</td>
+        <td>Grows/shrinks automatically</td>
+        <td>Grows/shrinks automatically</td>
+      </tr>
+      <tr>
+        <td>Memory layout</td>
+        <td>Contiguous block</td>
+        <td>Contiguous block (resized by copying when full)</td>
+        <td>Scattered nodes linked by pointers</td>
+      </tr>
+      <tr>
+        <td>Access by index — <code class="inline">arr[i]</code></td>
+        <td>O(1) — direct address calculation</td>
+        <td>O(1) — same underlying array</td>
+        <td>O(n) — must follow pointers from the start</td>
+      </tr>
+      <tr>
+        <td>Insert / delete at the <em>end</em></td>
+        <td>Not possible — size is fixed</td>
+        <td>O(1) on average</td>
+        <td>O(1) if you keep a tail pointer</td>
+      </tr>
+      <tr>
+        <td>Insert / delete in the <em>middle</em></td>
+        <td>Not possible without a new array</td>
+        <td>O(n) — later elements must shift</td>
+        <td>O(1) once you've found the position (O(n) to find it)</td>
+      </tr>
+      <tr>
+        <td>Extra memory per element</td>
+        <td>None</td>
+        <td>None (occasional spare capacity)</td>
+        <td>One pointer per node</td>
+      </tr>
+      <tr>
+        <td>Typical use case</td>
+        <td>Known, unchanging number of items (e.g. an array to sort)</td>
+        <td>General-purpose collection where size is unknown in advance</td>
+        <td>Frequent insertions/deletions in the middle of the collection</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Why this matters for sorting</h2>
+  <div class="panel">
+    <p>
+      All four sorting algorithms on this site — Bubble, Selection, Insertion and Merge
+      Sort — are written against <strong>arrays</strong> (Python lists used as fixed-size
+      arrays). They rely on O(1) index access: comparing <code class="inline">arr[j]</code>
+      and <code class="inline">arr[j+1]</code>, or writing directly to <code class="inline">arr[k]</code>,
+      has to be instant for these algorithms' time complexity (e.g. O(n²) or O(n log n)) to
+      hold. If you implemented the same algorithms over a true linked list, every indexed
+      access would cost O(n), and the overall running time would blow out — which is one
+      reason array-style storage is the standard structure for teaching and implementing
+      sorting algorithms, even though the syllabus also asks you to know about files and
+      linked lists as alternative data structures.
+    </p>
+  </div>
+
+  <h2>Quick self-check</h2>
+  <div class="panel">
+    <ul class="tight">
+      <li>Why is <code class="inline">arr[500]</code> just as fast as <code class="inline">arr[0]</code> in an array, but not in a linked list?</li>
+      <li>Why does inserting into the middle of an array-based list require shifting elements, while a linked list doesn't?</li>
+      <li>What has to happen when a dynamic array (like a Python list) runs out of spare capacity and you append one more item?</li>
+    </ul>
+  </div>
+</main>
+
+<footer class="site-footer">
+  Built for Software Engineering desk-check practice. Deployed via GitHub Pages.
+</footer>
+
+</body>
+</html>

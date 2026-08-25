@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bubble Sort — Desk Check</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <span class="brand">Sorting &amp; Merging</span>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../arrays-vs-lists.html">Arrays vs Lists</a>
+      <a href="bubble-sort.html" class="active">Bubble Sort</a>
+      <a href="selection-sort.html">Selection Sort</a>
+      <a href="insertion-sort.html">Insertion Sort</a>
+      <a href="merge-sort.html">Merge Sort</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Bubble Sort</h1>
+  <p class="lede">
+    Repeatedly steps through the array, comparing each pair of adjacent elements and
+    swapping them if they're in the wrong order. Larger values "bubble up" to the end
+    with each pass. Stops early once a whole pass makes no swaps.
+  </p>
+
+  <h2>Variables &amp; data structure</h2>
+  <div class="panel">
+    <ul class="tight">
+      <li><code class="inline">arr</code> — the array being sorted (fixed-size, in place — no extra array needed).</li>
+      <li><code class="inline">n</code> — number of elements in <code class="inline">arr</code>.</li>
+      <li><code class="inline">i</code> — outer loop counter: which pass we're on.</li>
+      <li><code class="inline">j</code> — inner loop counter: which adjacent pair is being compared.</li>
+      <li><code class="inline">swapped</code> — boolean flag; lets the algorithm exit early if a pass makes no swaps.</li>
+    </ul>
+  </div>
+
+  <h2>Control structures</h2>
+  <div class="panel">
+    <ul class="tight">
+      <li><strong>Nested iteration (selection by counting):</strong> an outer <code class="inline">FOR</code> loop (passes) containing an inner <code class="inline">FOR</code> loop (comparisons).</li>
+      <li><strong>Selection:</strong> an <code class="inline">IF</code> statement decides whether to swap each pair.</li>
+      <li><strong>Selection (early exit):</strong> an <code class="inline">IF NOT swapped THEN</code> break out of the outer loop once the array is sorted.</li>
+    </ul>
+  </div>
+
+  <h2>Flowchart</h2>
+  <div class="flowchart-wrap">
+    <svg viewBox="0 0 700 1180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bubble sort flowchart">
+      <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path class="fc-arrowhead" d="M0,0 L6,3 L0,6 Z"></path>
+        </marker>
+      </defs>
+
+      <rect class="fc-terminator" x="220" y="10" width="140" height="40" rx="20"></rect>
+      <text class="fc-text-light" x="290" y="34" text-anchor="middle">Start</text>
+      <path class="fc-arrow" d="M290,50 L290,75"></path>
+
+      <rect class="fc-shape" x="160" y="75" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="99" text-anchor="middle">i &#8592; 0</text>
+      <path class="fc-arrow" d="M290,115 L290,140"></path>
+
+      <polygon class="fc-decision" points="290,140 420,185 290,230 160,185"></polygon>
+      <text class="fc-text" x="290" y="181" text-anchor="middle">i &lt; n - 1 ?</text>
+      <text class="fc-text" x="290" y="196" text-anchor="middle" font-size="10">(more passes to do)</text>
+      <text class="fc-label" x="300" y="248">Yes</text>
+      <path class="fc-arrow" d="M290,230 L290,255"></path>
+
+      <rect class="fc-shape" x="160" y="255" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="279" text-anchor="middle">swapped &#8592; False</text>
+      <path class="fc-arrow" d="M290,295 L290,315"></path>
+
+      <rect class="fc-shape" x="160" y="315" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="339" text-anchor="middle">j &#8592; 0</text>
+      <path class="fc-arrow" d="M290,355 L290,380"></path>
+
+      <polygon class="fc-decision" points="290,380 420,425 290,470 160,425"></polygon>
+      <text class="fc-text" x="290" y="421" text-anchor="middle" font-size="11">j &lt; n - 1 - i ?</text>
+      <text class="fc-label" x="300" y="493">Yes</text>
+      <path class="fc-arrow" d="M290,470 L290,495"></path>
+
+      <polygon class="fc-decision" points="290,495 420,540 290,585 160,540"></polygon>
+      <text class="fc-text" x="290" y="533" text-anchor="middle" font-size="11">arr[j] &gt;</text>
+      <text class="fc-text" x="290" y="547" text-anchor="middle" font-size="11">arr[j+1] ?</text>
+      <text class="fc-label" x="300" y="608">Yes</text>
+      <path class="fc-arrow" d="M290,585 L290,605"></path>
+
+      <rect class="fc-shape" x="160" y="605" width="260" height="50" rx="4"></rect>
+      <text class="fc-text" x="290" y="625" text-anchor="middle" font-size="11">swap arr[j], arr[j+1]</text>
+      <text class="fc-text" x="290" y="641" text-anchor="middle" font-size="11">swapped &#8592; True</text>
+      <path class="fc-arrow" d="M290,655 L290,675"></path>
+
+      <rect class="fc-shape" x="160" y="675" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="699" text-anchor="middle">j &#8592; j + 1</text>
+
+      <!-- Decision3 No: skip swap -->
+      <text class="fc-label" x="428" y="535">No</text>
+      <path class="fc-arrow" d="M420,540 L470,540 L470,695 L420,695"></path>
+
+      <!-- inner loop-back to Decision2 -->
+      <text class="fc-label" x="566" y="562">loop</text>
+      <path class="fc-arrow" d="M420,695 L560,695 L560,425 L420,425"></path>
+
+      <!-- Decision2 No: inner loop ends -->
+      <text class="fc-label" x="60" y="415">No</text>
+      <path class="fc-arrow" d="M160,425 L90,425 L90,845 L160,845"></path>
+
+      <polygon class="fc-decision" points="290,800 420,845 290,890 160,845"></polygon>
+      <text class="fc-text" x="290" y="841" text-anchor="middle" font-size="11">swapped = False ?</text>
+      <text class="fc-text" x="290" y="855" text-anchor="middle" font-size="10">(no swaps this pass)</text>
+
+      <text class="fc-label" x="428" y="835">Yes &#8212; already sorted</text>
+      <path class="fc-arrow" d="M420,845 L500,845 L500,1110 L310,1110"></path>
+
+      <text class="fc-label" x="300" y="913">No</text>
+      <path class="fc-arrow" d="M290,890 L290,915"></path>
+
+      <rect class="fc-shape" x="160" y="915" width="260" height="40" rx="4"></rect>
+      <text class="fc-text" x="290" y="939" text-anchor="middle">i &#8592; i + 1</text>
+
+      <!-- outer loop-back to Decision1 -->
+      <text class="fc-label" x="10" y="562">loop</text>
+      <path class="fc-arrow" d="M160,935 L40,935 L40,185 L160,185"></path>
+
+      <!-- Decision1 No: outer loop ends -->
+      <text class="fc-label" x="428" y="178">No</text>
+      <path class="fc-arrow" d="M420,185 L460,185 L460,1110 L270,1110"></path>
+
+      <path class="fc-arrow" d="M290,1110 L290,1120"></path>
+      <rect class="fc-terminator" x="220" y="1120" width="140" height="40" rx="20"></rect>
+      <text class="fc-text-light" x="290" y="1144" text-anchor="middle">End</text>
+    </svg>
+  </div>
+
+  <h2>Pseudocode &amp; Python code</h2>
+  <div class="panel-grid">
+    <div>
+      <h3>Pseudocode</h3>
+      <pre><code>BEGIN BubbleSort(arr, n)
+  FOR i &#8592; 0 TO n - 2 DO
+    swapped &#8592; False
+    FOR j &#8592; 0 TO n - 2 - i DO
+      IF arr[j] &gt; arr[j + 1] THEN
+        swap(arr[j], arr[j + 1])
+        swapped &#8592; True
+      END IF
+    END FOR
+    IF swapped = False THEN
+      BREAK          { already sorted, stop early }
+    END IF
+  END FOR
+END BubbleSort</code></pre>
+    </div>
+    <div>
+      <h3>Python</h3>
+      <pre><code>def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr</code></pre>
+    </div>
+  </div>
+
+  <h2>Interactive desk check</h2>
+  <p class="lede">Set your own array (comma-separated) or randomise one, then step through — the trace table below fills in exactly like a paper desk check.</p>
+  <div id="visualizer"></div>
+</main>
+
+<footer class="site-footer">
+  Built for Software Engineering desk-check practice. Deployed via GitHub Pages.
+</footer>
+
+<script src="../js/visualizer.js"></script>
+<script src="../js/algorithms/bubble.js"></script>
+<script>
+  initVisualizer({
+    root: "visualizer",
+    algorithmFn: bubbleSortSteps,
+    varNames: ["i", "j", "swapped"],
+    defaultArray: [8, 3, 5, 4, 7, 6, 1, 2],
+  });
+</script>
+</body>
+</html>
